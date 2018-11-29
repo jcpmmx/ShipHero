@@ -49,6 +49,9 @@ class CarrierMockEndpoint(api.ShippingCostEndpoint):
         # Hitting fakeJSON's API
         request_data = _build_fakejson_request_data(response_code, original_data)
         response = requests.post(current_app.config['FAKEJSON_API_ENDPOINT'], json=request_data, params={'x': time()})
+        if response.text.startswith('Error'):
+            # fakeJSON issues (most likely we ran out of daily credits with them
+            return {'cost': 123}, response_code  # Dummy response
         return response.json(), response_code
 
 

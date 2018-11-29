@@ -48,9 +48,8 @@ class ShippingCostEndpoint(Resource):
         self.request_parser.add_argument(
             'box_type', type=str, required=True, choices=BoxType.choices(), help='Valid values: small, medium, big'
         )
-        self.request_parser.add_argument(
-            'test_mode', type=bool, default=False
-        )  # To disable self._verify_data()'s randomness so HTTP 400 is not raised
+        # To disable self._verify_data()'s randomness so HTTP 400 is not raised
+        self.request_parser.add_argument('test_mode', type=bool, default=False)
 
     def post(self):
         response_data = []
