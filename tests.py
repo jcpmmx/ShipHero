@@ -20,8 +20,8 @@ class _CommonLogicTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app(Env.TESTING)
         self.client = self.app.test_client()
-        self.api_carrier_endpoint = '/api/shipping/carrier'
-        self.api_shipping_cost_endpoint = '/api/shipping/cost'
+        self.carrier_endpoint = '/api/shipping/carrier'
+        self.shipping_cost_endpoint = '/api/shipping/cost'
         with self.app.app_context():
             db.create_all()
             load_initial_db_data(self.app, db)
@@ -34,36 +34,48 @@ class _CommonLogicTestCase(unittest.TestCase):
 
 class CarrierEndpointTestCase(_CommonLogicTestCase):
     """
-    Test cases for the Carrier API endpoint.
+    Test cases for the carrier API endpoint.
     """
 
-    def test_general(self):
-        # Checking happy path
-        response = self.client.get(self.api_carrier_endpoint)
+    def test_http_methods(self):
+        # Checking allowed methods
+        response = self.client.get(self.carrier_endpoint)
         response_json = response.get_json()
         self.assertEqual(response.status_code, 200)
-        self.assertTrue(len(response_json))
+        self.assertEqual(len(response_json), 2)  # We have 2 carriers in DB
+        # Checking unallowed HTTP methods
+        self.assertTrue(self.client.post(self.carrier_endpoint).status_code, 405)
+        self.assertTrue(self.client.put(self.carrier_endpoint).status_code, 405)
+        self.assertTrue(self.client.patch(self.carrier_endpoint).status_code, 405)
+        self.assertTrue(self.client.delete(self.carrier_endpoint).status_code, 405)
+
+    def test_retrieve(self):
+        response = self.client.get(self.carrier_endpoint)
+        response_json = response.get_json()
+        self.assertEqual(response.status_code, 200)
         for expected_attr in ('code', 'name', 'shipment_methods', 'enabled'):
             self.assertIn(expected_attr, response_json[0])
-
-        # Checking unallowed HTTP methods
-        response_post = self.client.post(self.api_carrier_endpoint)
-        response_put = self.client.put(self.api_carrier_endpoint)
-        response_patch = self.client.patch(self.api_carrier_endpoint)
-        response_delete = self.client.delete(self.api_carrier_endpoint)
-        self.assertTrue(response_post.status_code, 405)
-        self.assertTrue(response_put.status_code, 405)
-        self.assertTrue(response_patch.status_code, 405)
-        self.assertTrue(response_delete.status_code, 405)
 
 
 class ShippingCostEndpointTestCase(_CommonLogicTestCase):
     """
-    Test cases for the Carrier API endpoint.
+    Test cases for the shipping cost API endpoint.
     """
 
-    def test_general(self):
-        # Checking happy path
+    def test_http_methods(self):
+        # Testing allowed methods
+        response = self.client.post(self.shipping_cost_endpoint)
+        response_json = response.get_json()
+        self.assertEqual(response.status_code, 400)  # No data to return, empty requests are not allowed
+        self.assertEqual(len(response_json['message']), 4)  # 4 missing params
+        # Testing unallowed methods
+        self.assertTrue(self.client.get(self.shipping_cost_endpoint).status_code, 405)
+        self.assertTrue(self.client.put(self.shipping_cost_endpoint).status_code, 405)
+        self.assertTrue(self.client.patch(self.shipping_cost_endpoint).status_code, 405)
+        self.assertTrue(self.client.delete(self.shipping_cost_endpoint).status_code, 405)
+
+    def test_create(self):
+        # Testing happy path
         request_data = {
             'address': '123 Fake St, Springfield',
             'weight': 33,
@@ -71,7 +83,7 @@ class ShippingCostEndpointTestCase(_CommonLogicTestCase):
             'box_type': BoxType.MEDIUM.value,
             'test_mode': True,
         }
-        response = self.client.post(self.api_shipping_cost_endpoint, json=request_data)
+        response = self.client.post(self.shipping_cost_endpoint, json=request_data)
         response_json = response.get_json()
         self.assertEqual(response.status_code, 200)
         self.assertTrue(len(response_json))
@@ -80,17 +92,7 @@ class ShippingCostEndpointTestCase(_CommonLogicTestCase):
         self.assertEqual(response_json[0]['error'], '')
         self.assertEqual(type(response_json[0]['cost']), int)
 
-        # Checking unallowed HTTP methods
-        response_post = self.client.post(self.api_shipping_cost_endpoint)
-        response_put = self.client.put(self.api_shipping_cost_endpoint)
-        response_patch = self.client.patch(self.api_shipping_cost_endpoint)
-        response_delete = self.client.delete(self.api_shipping_cost_endpoint)
-        self.assertTrue(response_post.status_code, 405)
-        self.assertTrue(response_put.status_code, 405)
-        self.assertTrue(response_patch.status_code, 405)
-        self.assertTrue(response_delete.status_code, 405)
-
-    def test_expected_data(self):
+        # Testing different combinations of bad input data
         malformed_request_data_1 = {  # Missing data
             'address': '123 Fake St, Springfield',
             'weight': 33,
@@ -110,9 +112,9 @@ class ShippingCostEndpointTestCase(_CommonLogicTestCase):
             'box_type': BoxType.MEDIUM.value,
             'test_mode': True,
         }
-        response_with_error_1 = self.client.post(self.api_shipping_cost_endpoint, json=malformed_request_data_1)
-        response_with_error_2 = self.client.post(self.api_shipping_cost_endpoint, json=malformed_request_data_2)
-        response_with_error_3 = self.client.post(self.api_shipping_cost_endpoint, json=malformed_request_data_3)
+        response_with_error_1 = self.client.post(self.shipping_cost_endpoint, json=malformed_request_data_1)
+        response_with_error_2 = self.client.post(self.shipping_cost_endpoint, json=malformed_request_data_2)
+        response_with_error_3 = self.client.post(self.shipping_cost_endpoint, json=malformed_request_data_3)
         self.assertEqual(response_with_error_1.status_code, 400)
         self.assertEqual(response_with_error_2.status_code, 400)
         self.assertEqual(response_with_error_3.status_code, 400)
