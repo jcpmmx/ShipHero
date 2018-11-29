@@ -48,11 +48,11 @@ class Carrier(db.Model):
     def code(self):
         return self.name.strip().lower()
 
-    @staticmethod
-    def get_all():
-        return Carrier.query.all()
+    @classmethod
+    def get_all(cls):
+        return cls.query.all()
 
-    @staticmethod
-    def get_all_enabled():
-        return Carrier.query.filter_by(enabled=True)
+    @classmethod
+    def get_all_enabled(cls):
+        return cls.query.filter_by(enabled=True).all()
 

@@ -116,6 +116,5 @@ def load_initial_db_data(app, db):
                 carrier = Carrier(**carrier_data)
                 db.session.add(carrier)
             db.session.commit()
-
     except ProgrammingError:
         pass  # DB is empty, no tables yet
