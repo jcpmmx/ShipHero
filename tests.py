@@ -20,8 +20,8 @@ class _CommonLogicTestCase(unittest.TestCase):
     def setUp(self):
         self.app = create_app(Env.TESTING)
         self.client = self.app.test_client()
-        self.carrier_endpoint = '/api/shipping/carrier'
-        self.shipping_cost_endpoint = '/api/shipping/cost'
+        self.carrier_endpoint = '/api/shipping/carriers'
+        self.shipping_cost_endpoint = '/api/shipping/costs'
         with self.app.app_context():
             db.create_all()
             load_initial_db_data(self.app, db)
@@ -32,7 +32,7 @@ class _CommonLogicTestCase(unittest.TestCase):
             db.drop_all()
 
 
-class CarrierEndpointTestCase(_CommonLogicTestCase):
+class CarriersEndpointTestCase(_CommonLogicTestCase):
     """
     Test cases for the carrier API endpoint.
     """
@@ -57,7 +57,7 @@ class CarrierEndpointTestCase(_CommonLogicTestCase):
             self.assertIn(expected_attr, response_json[0])
 
 
-class ShippingCostEndpointTestCase(_CommonLogicTestCase):
+class ShippingCostsEndpointTestCase(_CommonLogicTestCase):
     """
     Test cases for the shipping cost API endpoint.
     """

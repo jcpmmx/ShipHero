@@ -34,7 +34,7 @@ def _build_fakejson_request_data(response_code, original_data):
     return request_data
 
 
-class CarrierMockEndpoint(api.ShippingCostEndpoint):
+class CarriersMockEndpoint(api.ShippingCostsEndpoint):
     """
     API endpoint logic to mock interactions with any carrier using fakeJSON.
     """
@@ -60,4 +60,4 @@ def configure_external_apis(app):
     Attaches an API to the given Flask app.
     """
     api = Api(app)
-    api.add_resource(CarrierMockEndpoint, '/mock/<string:carrier_code>/shippingcost')
+    api.add_resource(CarriersMockEndpoint, '/mock/<string:carrier_code>/shippingcosts')

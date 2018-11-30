@@ -13,7 +13,7 @@ from app.models import Carrier
 from config import Env
 
 
-class CarrierEndpoint(Resource):
+class CarriersEndpoint(Resource):
     """
     API endpoint to get all supported carriers.
     """
@@ -29,7 +29,7 @@ class CarrierEndpoint(Resource):
         return Carrier.get_all()
 
 
-class ShippingCostEndpoint(Resource):
+class ShippingCostsEndpoint(Resource):
     """
     API endpoint to get the shipping cost of a given package (as described by its address, weight, priority anf box 
     type) for all available carriers.
@@ -110,5 +110,5 @@ def configure_api(app):
     Attaches an API to the given Flask app.
     """
     api = Api(app)
-    api.add_resource(CarrierEndpoint, '/api/shipping/carrier')
-    api.add_resource(ShippingCostEndpoint, '/api/shipping/cost')
+    api.add_resource(CarriersEndpoint, '/api/shipping/carriers')
+    api.add_resource(ShippingCostsEndpoint, '/api/shipping/costs')

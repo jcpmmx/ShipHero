@@ -14,14 +14,14 @@ CARRIERS_DATA = [
         'app_id': 'FEDEXID',
         'app_token': 'FEDEXTKN',
         'shipment_methods': {'cheap': 'fdxchp', 'regular': 'fdxreg', 'express': 'fdxexp'},
-        'api_endpoint_url': '/mock/fedex/shippingcost',
+        'api_endpoint_url': '/mock/fedex/shippingcosts',
     },
     {
         'name': 'UPS',
         'app_id': 'UPSID',
         'app_token': 'UPSTKN',
         'shipment_methods': {'cheap': 'upschp', 'regular': 'upsreg', 'express': 'upsexp'},
-        'api_endpoint_url': '/mock/ups/shippingcost',
+        'api_endpoint_url': '/mock/ups/shippingcosts',
     },
 ]
 
