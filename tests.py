@@ -14,7 +14,7 @@ from config import Env, load_initial_db_data
 
 class _CommonLogicTestCase(unittest.TestCase):
     """
-    Class to encapsultae some common logic for all test cases.
+    Class to encapsulate some common logic for all test cases.
     """
 
     def setUp(self):
