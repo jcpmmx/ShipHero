@@ -76,7 +76,7 @@ class ShippingCostsEndpoint(Resource):
         # - If the weight makes sense for the type of box selected
         # For now, it's just gonna abort randomly (70% chance of success)
         if not data['test_mode'] and not random.choices((0, 1), weights=(0.3, 0.7), k=1)[0]:
-            abort(400, message='Shame! http://weknowmemes.com/wp-content/uploads/2013/09/boo-bitch-aaron-paul-gif.png')
+            abort(400, message='Shame on you, check your input! https://i.imgur.com/NAJE0d0.png')
 
     def _handle_carrier_response(self, carrier, response):
         """
