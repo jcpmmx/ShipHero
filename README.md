@@ -1,5 +1,4 @@
-# ShipHeroTest
-ShipHero take-home test project.
+Originally developed as a take-home test project for ShipHero.
 
 ### System requirements
 - Python (v3.6.5)
