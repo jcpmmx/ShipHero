@@ -1,4 +1,5 @@
-Originally developed as a take-home test project for ShipHero.
+# ShipHero
+> Originally developed as a take-home test project for ShipHero.
 
 ### System requirements
 - Python (v3.6.5)
@@ -20,6 +21,8 @@ Originally developed as a take-home test project for ShipHero.
 4. Run `python manage.py db init` and `python manage.py db upgrade` to set your DB instance
 5. Run `python run.py` to run Flask's development server and go to `http://localhost:5000`
 6. Run `python tests.py` to run test cases
+
+---
 
 ### About this solution
 
