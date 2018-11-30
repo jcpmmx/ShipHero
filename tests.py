@@ -44,10 +44,10 @@ class CarrierEndpointTestCase(_CommonLogicTestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(len(response_json), 2)  # We have 2 carriers in DB
         # Checking unallowed HTTP methods
-        self.assertTrue(self.client.post(self.carrier_endpoint).status_code, 405)
-        self.assertTrue(self.client.put(self.carrier_endpoint).status_code, 405)
-        self.assertTrue(self.client.patch(self.carrier_endpoint).status_code, 405)
-        self.assertTrue(self.client.delete(self.carrier_endpoint).status_code, 405)
+        self.assertEqual(self.client.post(self.carrier_endpoint).status_code, 405)
+        self.assertEqual(self.client.put(self.carrier_endpoint).status_code, 405)
+        self.assertEqual(self.client.patch(self.carrier_endpoint).status_code, 405)
+        self.assertEqual(self.client.delete(self.carrier_endpoint).status_code, 405)
 
     def test_retrieve(self):
         response = self.client.get(self.carrier_endpoint)
@@ -69,10 +69,10 @@ class ShippingCostEndpointTestCase(_CommonLogicTestCase):
         self.assertEqual(response.status_code, 400)  # No data to return, empty requests are not allowed
         self.assertEqual(len(response_json['message']), 4)  # 4 missing params
         # Testing unallowed methods
-        self.assertTrue(self.client.get(self.shipping_cost_endpoint).status_code, 405)
-        self.assertTrue(self.client.put(self.shipping_cost_endpoint).status_code, 405)
-        self.assertTrue(self.client.patch(self.shipping_cost_endpoint).status_code, 405)
-        self.assertTrue(self.client.delete(self.shipping_cost_endpoint).status_code, 405)
+        self.assertEqual(self.client.get(self.shipping_cost_endpoint).status_code, 405)
+        self.assertEqual(self.client.put(self.shipping_cost_endpoint).status_code, 405)
+        self.assertEqual(self.client.patch(self.shipping_cost_endpoint).status_code, 405)
+        self.assertEqual(self.client.delete(self.shipping_cost_endpoint).status_code, 405)
 
     def test_create(self):
         # Testing happy path
