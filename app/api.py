@@ -91,12 +91,12 @@ class ShippingCostsEndpoint(Resource):
             carrier_cost = response.get_json()['cost']
 
         # Error from carrier API
-        elif str(response.status_code).startswith('5'):
+        elif response.status_code == 404 or response.status_code >= 500:
             # In here, we would handle the carriers' API response accordingly (e.g. logging, email notification, ...)
             error_message = 'Blame {}! https://memegenerator.net/img/instances/44786501.jpg'.format(carrier.name)
         # Unexpected error
         else:
-            error_message = "Whoops! https://i.imgur.com/NAJE0d0.png"
+            error_message = "Whoops, our mistake! https://i.imgur.com/NAJE0d0.png"
 
         return {
             'carrier': carrier.code,
