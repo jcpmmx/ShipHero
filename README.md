@@ -133,7 +133,7 @@ HTTP/1.0 200 OK
 ### Limitations
 - `fakeJSON` daily credits (this is the case when `cost` is always 123)
 
-### Nices to have
+### Nice to haves
 - Add Flask-API support so our API is browsable
 - Return more realistic costs, one per shipment method
 - Connect to real APIs from carriers
