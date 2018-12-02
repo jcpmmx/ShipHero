@@ -97,7 +97,7 @@ Internally, this endpoint takes all the data, verifies it (it randomly generates
 
 e.g. Response for an empty POST request
 ```
-HTTP/1.0 200 OK
+HTTP/1.0 400 BAD REQUEST
 {
     "message": {
         "address": "Destination to calculate shipment costs for",
