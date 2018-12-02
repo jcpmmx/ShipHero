@@ -17,7 +17,7 @@
 ### How to run this locally
 1. Clone this repo
 2. Install all Python libraries (ideally inside a `virtualenv`): `pip install -r requirements.txt` 
-3. Create 2 new PostgreSQL databases: `createdb shiphero` and `createdb shiphero_test`
+3. Create 2 new PostgreSQL databases: `createdb shiphero` and `createdb shiphero_test` (for test cases)
 4. Run `python manage.py db init` and `python manage.py db upgrade` to set your DB instance
 5. Run `python run.py` to run Flask's development server and go to `http://localhost:5000`
 6. Run `python tests.py` to run test cases
@@ -34,7 +34,7 @@ This Flask application contains one SQLAlchemy model, `Carrier`, that represents
 The app also provides 2 API endpoints to interact with.  
 These endpoints are RESTful and work with JSON by default.
 
-1. `/api/shipping/carrier`: returns a list of all carriers supported.  
+1. `/api/shipping/carriers`: returns a list of all carriers supported.  
 e.g.
 ```
 Request: HTTP POST
@@ -65,7 +65,7 @@ Response: HTTP/1.0 200 OK
 ```
 > For testing purposes, the DB comes with 2 preloaded carriers: Fedex and UPS
 
-2. `/api/shipping/cost`: returns the cost of a given shipment done by each of the enabled carriers.  
+2. `/api/shipping/costs`: returns the cost of a given shipment done by each of the enabled carriers.  
 All params are required and have type checking (i.e. `weight` must be a valid int, `box_type` must be only the valid values).
 
 e.g.  
