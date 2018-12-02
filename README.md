@@ -97,6 +97,9 @@ Internally, this endpoint takes all the data, verifies it (it randomly generates
 
 e.g. Response for an empty POST request
 ```
+Request: HTTP POST
+{}
+
 HTTP/1.0 400 BAD REQUEST
 {
     "message": {
@@ -135,5 +138,6 @@ HTTP/1.0 200 OK
 
 ### Nice to haves
 - Add Flask-API support so our API is browsable
+- Add API docs (e.g. Swagger)
 - Return more realistic costs, one per shipment method
 - Connect to real APIs from carriers
