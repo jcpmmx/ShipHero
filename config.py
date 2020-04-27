@@ -47,7 +47,7 @@ class BaseConfig(object):
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     FAKEJSON_API_ENDPOINT = 'https://app.fakejson.com/q'
-    FAKEJSON_API_TOKEN = 'tQPCEIEG76UMGolsVx6paQ'
+    FAKEJSON_API_TOKEN = '<EDITED>'
 
 
 class DevelopmentConfig(BaseConfig):
